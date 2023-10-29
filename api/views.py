@@ -9,13 +9,25 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework import  generics
+from rest_framework import mixins
+
+
 
 
 
 # Create your views here.
 
-#class api views
+#  create generics
+class GenericAPIView(generics.GenericAPIView,mixins.ListModelMixin):
+    serializer_class=ArticleSerializer
+    queryset=Article.objects.all()
 
+    def get(self,request):
+        return self.list(request)
+
+
+#class api views
 class ArticleAPIView(APIView):
     def get(self,request):
         articles = Article.objects.all()
